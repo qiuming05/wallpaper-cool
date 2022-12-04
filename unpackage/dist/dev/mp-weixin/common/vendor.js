@@ -10850,7 +10850,10 @@ module.exports = new Down();
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.objToUrl = exports.byte = exports.getTime = void 0;var getTime = function getTime() {
+Object.defineProperty(exports, "__esModule", { value: true });exports.objToUrl = exports.byte = exports.getTime = void 0; /**
+                                                                                                                                        * 获取时间
+                                                                                                                                        */
+var getTime = function getTime() {
   var date = new Date();
   return "".concat(date.getFullYear(), "-").concat(date.getMonth() + 1, "-").concat(date.getDate(), " ").concat(date.getHours(), ":").concat(date.getMinutes(), ":").concat(date.getSeconds());
 };

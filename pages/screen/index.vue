@@ -111,13 +111,13 @@
 			}
 			this.sort.columns.find((val, index) => {
 				if (val.value === this.screen.sort) {
-					this.sort.value = this.sort.columns[index].text
+					this.sort.value = this.sort.columns[index].value
 					return true
 				}
 			})
 			this.atleast.columns.find((val, index) => {
 				if (val.value === this.screen.atleast) {
-					this.atleast.value = this.atleast.columns[index].text
+					this.atleast.value = this.atleast.columns[index].value
 					return true
 				}
 			})

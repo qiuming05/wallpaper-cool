@@ -289,13 +289,13 @@ var _default = {
     }
     this.sort.columns.find(function (val, index) {
       if (val.value === _this.screen.sort) {
-        _this.sort.value = _this.sort.columns[index].text;
+        _this.sort.value = _this.sort.columns[index].value;
         return true;
       }
     });
     this.atleast.columns.find(function (val, index) {
       if (val.value === _this.screen.atleast) {
-        _this.atleast.value = _this.atleast.columns[index].text;
+        _this.atleast.value = _this.atleast.columns[index].value;
         return true;
       }
     });

@@ -40,7 +40,7 @@
 				</view>
 				<view class="menu-item" hover-stay-time="50" @click="historyClick">
 					<view class="left-side">
-						<image src="/static/icon/see.png"></image>
+						<image src="/static/icon/view.png"></image>
 						<view class="title">我的预览</view>
 					</view>
 					<view class="right-side">

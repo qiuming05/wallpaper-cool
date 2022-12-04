@@ -1,7 +1,7 @@
 <template>
 	<view class="main">
 		<view class="search">
-			<u-search placeholder="请使用英文进行搜索" height="38px" v-model="keyword" @search="handleSearch"
+			<u-search searchIconSize="38" placeholder="请使用英文进行搜索" height="38px" v-model="keyword" @search="handleSearch"
 				@custom="handleSearch">
 			</u-search>
 		</view>
