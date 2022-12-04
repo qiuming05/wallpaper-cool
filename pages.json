@@ -1,0 +1,138 @@
+{
+	"easycom": {
+		"^u-(.*)": "@/uni_modules/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "主页",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				// uniapp禁止页面滑动的方法禁止页面下拉显示空白，在pages.json中：将回弹属性关掉
+				"app-plus": {
+					"bounce": "none" // 将回弹属性关掉
+				}
+			}
+		},
+		{
+			"path": "pages/type/index",
+			"style": {
+				"navigationBarTitleText": "类别",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				// uniapp禁止页面滑动的方法禁止页面下拉显示空白，在pages.json中：将回弹属性关掉
+				"app-plus": {
+					"bounce": "none" // 将回弹属性关掉
+				}
+			}
+		},
+		{
+			"path": "pages/user/index",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom",
+				// uniapp禁止页面滑动的方法禁止页面下拉显示空白，在pages.json中：将回弹属性关掉
+				"app-plus": {
+					"bounce": "none" // 将回弹属性关掉
+				}
+			}
+		},
+		{
+			"path": "pages/search/index",
+			"style": {
+				"navigationBarTitleText": "搜索",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/searchPage/index",
+			"style": {
+				"navigationBarTitleText": "搜索页",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/screen/index",
+			"style": {
+				"navigationBarTitleText": "筛选",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/detail/index",
+			"style": {
+				"navigationBarTitleText": "预览",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/preview/index",
+			"style": {
+				"navigationBarTitleText": "类别预览",
+				"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/down/index",
+			"style": {
+				"navigationBarTitleText": "我的下载",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/collection/index",
+			"style": {
+				"navigationBarTitleText": "我的收藏",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/history/index",
+			"style": {
+				"navigationBarTitleText": "我的预览",
+				"navigationBarTextStyle": "black",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
+	"globalStyle": {
+		"navigationBarTextStyle": "white",
+		"navigationBarTitleText": "壁纸酷",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#FFFFFF"
+	},
+	"tabBar": {
+		"color": "#909399",
+		"selectedColor": "#000000",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabbar/home.png",
+				"selectedIconPath": "static/tabbar/home_art.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/type/index",
+				"iconPath": "static/tabbar/center.png",
+				"selectedIconPath": "static/tabbar/center_art.png",
+				"text": "分类"
+			},
+			{
+				"pagePath": "pages/user/index",
+				"iconPath": "static/tabbar/user.png",
+				"selectedIconPath": "static/tabbar/user_art.png",
+				"text": "我的"
+			}
+		]
+	}
+}

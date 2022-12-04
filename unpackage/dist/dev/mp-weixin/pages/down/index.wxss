@@ -1,0 +1,97 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.undone .item.data-v-7365afde {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 32rpx;
+  overflow: hidden;
+  position: relative;
+}
+.undone .item .content.data-v-7365afde {
+  display: flex;
+}
+.undone .item .content image.data-v-7365afde {
+  border-radius: 16rpx;
+}
+.undone .item .content .info.data-v-7365afde {
+  padding-left: 32rpx;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  width: calc(100% - 120px);
+}
+/* image {
+	width: 120px;
+	height: 80px;
+	border-radius: 16rpx;
+} */
+.title.data-v-7365afde {
+  color: #a7a7a7;
+  margin: 10px;
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.main.data-v-7365afde {
+  padding: 15rpx;
+  margin-bottom: 350rpx;
+}
+.main .empty.data-v-7365afde {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main .empty .empty-btn.data-v-7365afde {
+  color: white;
+  margin: 10px;
+  padding: 16rpx;
+  border-radius: 24px;
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  background-image: linear-gradient(135deg, #f6d365, #fda085);
+}
+.main .done.data-v-7365afde {
+  display: flex;
+  flex-direction: column;
+}
+.main .done .item.data-v-7365afde {
+  display: flex;
+  align-items: center;
+  border-radius: 16rpx;
+  margin-bottom: 32rpx;
+  overflow: hidden;
+  position: relative;
+}
+.main .done .item .content.data-v-7365afde {
+  margin-left: 32rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.main .done .item .content view.data-v-7365afde {
+  padding: 5rpx;
+}
+.main .done .del.data-v-7365afde {
+  padding: 16rpx;
+  position: absolute;
+  right: 16rpx;
+}
+

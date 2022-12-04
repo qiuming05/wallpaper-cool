@@ -1,0 +1,141 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.main.data-v-707abc76 {
+  padding: 15rpx;
+}
+.main .type .title.data-v-707abc76 {
+  font-size: 48rpx;
+  padding: 16rpx;
+}
+.main .type .categories.data-v-707abc76 {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: white;
+}
+.main .type .categories .tab.data-v-707abc76 {
+  white-space: nowrap;
+  padding-right: 16rpx;
+}
+.main .type .categories .tab .tabs.data-v-707abc76:last-child {
+  margin-right: 0;
+}
+.main .type .categories .tab .tabs.data-v-707abc76 {
+  font-size: 14px;
+  background-color: #F5F6F8;
+  color: #909399;
+  border-radius: 16rpx;
+  line-height: 60rpx;
+  padding: 6rpx 40rpx;
+  margin-right: 20rpx;
+  display: inline-block;
+}
+.main .type .categories .tab .active.data-v-707abc76 {
+  color: white;
+  background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  box-shadow: 0px 0px 5px 2px #a1c4fd;
+  -webkit-animation: tiaobig-data-v-707abc76 0.8s ease-in-out alternate infinite;
+          animation: tiaobig-data-v-707abc76 0.8s ease-in-out alternate infinite;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+}
+@-webkit-keyframes tiaobig-data-v-707abc76 {
+0% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+}
+25% {
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+}
+50% {
+    -webkit-transform: scale(0.94);
+            transform: scale(0.94);
+}
+75% {
+    -webkit-transform: scale(1.06);
+            transform: scale(1.06);
+}
+100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+}
+}
+@keyframes tiaobig-data-v-707abc76 {
+0% {
+    -webkit-transform: scale(0.98);
+            transform: scale(0.98);
+}
+25% {
+    -webkit-transform: scale(1.08);
+            transform: scale(1.08);
+}
+50% {
+    -webkit-transform: scale(0.94);
+            transform: scale(0.94);
+}
+75% {
+    -webkit-transform: scale(1.06);
+            transform: scale(1.06);
+}
+100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+}
+}
+.main .type .categories .item.data-v-707abc76 {
+  flex-wrap: wrap;
+  display: flex;
+  padding-bottom: 350rpx;
+}
+.main .type .categories .item .items.data-v-707abc76 {
+  margin-left: 16rpx;
+  margin-top: 16rpx;
+  width: 100%;
+}
+.main .ranking.data-v-707abc76 {
+  white-space: nowrap;
+}
+.main .ranking .tab.data-v-707abc76 {
+  display: inline-block;
+  width: 225rpx;
+  padding: 30rpx 50rpx;
+  border-radius: 12rpx;
+  color: #FFFFFF;
+  text-align: center;
+  margin-right: 15rpx;
+}
+.main .ranking .tab.data-v-707abc76:nth-child(1) {
+  background-image: linear-gradient(135deg, #84fab0, #8fd3f4);
+}
+.main .ranking .tab.data-v-707abc76:nth-child(2) {
+  background-image: linear-gradient(135deg, #d4fc79, #96e6a1);
+}
+.main .ranking .tab.data-v-707abc76:nth-child(3) {
+  background-image: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+}
+.main .ranking .tab.data-v-707abc76:nth-child(4) {
+  background-image: linear-gradient(135deg, #e6dee9, #fdcbf1);
+}
+.main .ranking .tab.data-v-707abc76:nth-child(5) {
+  margin-right: 0rpx;
+  background-image: linear-gradient(135deg, #f6d365, #fda085);
+}
+

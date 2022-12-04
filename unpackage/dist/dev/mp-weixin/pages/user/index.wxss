@@ -1,0 +1,115 @@
+@charset "UTF-8";
+/**
+ * 下方引入的为uView UI的集成样式文件，为scss预处理器，其中包含了一些"u-"开头的自定义变量
+ * 使用的时候，请将下面的一行复制到您的uniapp项目根目录的uni.scss中即可
+ * uView自定义的css类名和scss变量，均以"u-"开头，不会造成冲突，请放心使用 
+ */
+/* 颜色变量 */
+/* 行为相关颜色 */
+/* 文字基本颜色 */
+/* 背景颜色 */
+/* 边框颜色 */
+/* 尺寸变量 */
+/* 文字尺寸 */
+/* 图片尺寸 */
+/* Border Radius */
+/* 水平间距 */
+/* 垂直间距 */
+/* 透明度 */
+/* 文章场景相关 */
+.head {
+  margin: 32rpx 32rpx 32rpx 24rpx;
+  height: 250rpx;
+  border-radius: 36rpx;
+  overflow: hidden;
+  /* 设置渐变 */
+  background: linear-gradient(to right bottom, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.2));
+  /* 设置上高光和左高光，使其看起来更加逼真 */
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+  border-left: 1px solid rgba(255, 255, 255, 0.8);
+  position: relative;
+  box-shadow: 0px 0px 10px #c2e9fb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.head text {
+  font-size: 72rpx;
+  color: white;
+  font-weight: 900;
+}
+.head .bg {
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  -webkit-filter: blur(10px);
+          filter: blur(10px);
+}
+.main {
+  padding: 32rpx;
+}
+.main .store {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.main .store .store-item:first-child {
+  margin-left: 0;
+}
+.main .store .store-item:last-child {
+  margin-right: 0;
+}
+.main .store .store-item {
+  flex: 1;
+  padding: 36rpx;
+  margin: 0 16rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  border-radius: 24rpx;
+  background: white;
+  white-space: nowrap;
+}
+.main .store .store-item .num {
+  font-size: 52rpx;
+  font-weight: 900;
+  color: transparent;
+  -webkit-background-clip: text;
+          background-clip: text;
+  background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+  margin-bottom: 16rpx;
+}
+.main .menu {
+  margin-top: 36rpx;
+  background: white;
+  border-radius: 24rpx;
+}
+.main .menu .menu-item:last-child {
+  border-bottom: none;
+}
+.main .menu .menu-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 36rpx;
+  box-sizing: border-box;
+  border-bottom: 1px solid #efefef;
+}
+.main .menu .menu-item .left-side {
+  display: flex;
+}
+.main .menu .menu-item .left-side .title {
+  margin-left: 24rpx;
+}
+.main .menu image {
+  width: 38rpx;
+  height: 38rpx;
+}
+
