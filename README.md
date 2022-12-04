@@ -34,18 +34,18 @@
 	</tr>
 </table>
 
-### 效果图
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/1.jpg?raw=true" width="350"/>
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/2.jpg?raw=true" width="350"/>
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/3.jpg?raw=true" width="350"/>
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/4.jpg?raw=true" width="350"/>
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/5.jpg?raw=true" width="350"/>
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/6.jpg?raw=true" width="350"/>
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/7.jpg?raw=true" width="350"/>
-
 ### 参考项目
 - 【猫优壁纸】初始版本 免费全开源
    - 插件市场：https://ext.dcloud.net.cn/plugin?id=7901
 - wallhaven-electron 一款基于 Electron 壁纸客户端
    - gitee：https://gitee.com/ml13/wallhaven-electron
    - github：https://github.com/MaLuns/wallhaven-electron
+
+### 效果图
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/1.jpg?raw=true" width="250"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/2.jpg?raw=true" width="250"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/3.jpg?raw=true" width="250"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/4.jpg?raw=true" width="250"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/5.jpg?raw=true" width="250"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/6.jpg?raw=true" width="250"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/7.jpg?raw=true" width="250"/>
