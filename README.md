@@ -35,13 +35,13 @@
 </table>
 
 ### 效果图
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/1.jpg?raw=true" />
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/2.jpg?raw=true" />
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/3.jpg?raw=true" />
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/4.jpg?raw=true" />
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/5.jpg?raw=true" />
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/6.jpg?raw=true" />
-<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/7.jpg?raw=true" />
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/1.jpg?raw=true" width="350"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/2.jpg?raw=true" width="350"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/3.jpg?raw=true" width="350"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/4.jpg?raw=true" width="350"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/5.jpg?raw=true" width="350"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/6.jpg?raw=true" width="350"/>
+<img src="https://github.com/qiuming05/wallpaper-cool/blob/master/demo/7.jpg?raw=true" width="350"/>
 
 ### 参考项目
 - 【猫优壁纸】初始版本 免费全开源
