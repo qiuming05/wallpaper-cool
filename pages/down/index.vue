@@ -2,8 +2,7 @@
 	<view class="main">
 		<view v-if="downDoneFile.length === 0 && downFileLen === 0" class="empty">
 			<view>
-				<u-icon name="/static/nodata.png" size="300rpx" />
-				<view class="empty-btn">空空如也</view>
+				<u-icon name="/static/empty.gif" size="520rpx" />
 			</view>
 		</view>
 		<view class="undone" v-if="downFileLen !== 0">
@@ -13,11 +12,14 @@
 					<!-- <image :src="item.thumbs.small"></image> -->
 					<lazyImage width="120px" height="80px" borderRadius="16rpx" :src="item.thumbs.small"></lazyImage>
 					<view class="info">
-						<view class="resolution">{{item.resolution}}</view>
-						<view class="progress">
-							<u-line-progress :percentage="item.progress" activeColor="#4e6ef2" :showText="false" />
+						<view class="left-side">
+							<view class="resolution">{{item.resolution}}</view>
+							<view class="size">{{item | sizeFormat}}</view>
 						</view>
-						<view class="size">{{item | sizeFormat}}</view>
+						<view class="progress right-side">
+							<circle-progress-bar :pro="item.progress / 100" :size="72" :border_width="10">
+							</circle-progress-bar>
+						</view>
 					</view>
 				</view>
 			</view>
@@ -30,15 +32,15 @@
 			</uni-section>
 			<view v-for="(item,index) of downDoneFile" :key="item.id" class="item">
 				<!-- <image :src="item.thumbs.small" @click="() => handleClickImg({item,index})"></image> -->
-				<lazyImage width="120px" height="80px" borderRadius="16rpx" :src="item.thumbs.small"
-					@click="() => handleClickImg({item,index})"></lazyImage>
+				<lazy-image width="120px" height="80px" borderRadius="16rpx" :src="item.thumbs.small"
+					@click="() => handleClickImg({item,index})"></lazy-image>
 				<view class="content">
 					<view class="date">{{item.downTime}}</view>
 					<view class="resolution">{{item.resolution}}</view>
 					<view class="size">{{item.size}}</view>
 				</view>
 				<view class="del" @click="() => DEL_DOWN_DONE_FILE(item.path)">
-					<u-icon name="close" color="#2979ff" size="44"></u-icon>
+					<u-icon name="close-circle" color="#2979ff" size="44"></u-icon>
 				</view>
 			</view>
 		</view>
@@ -46,8 +48,7 @@
 </template>
 
 <script>
-	import store from '@/store/index.js'; //需要引入store
-	import lazyImage from "@/components/lazy-image/index.vue"
+	import store from '@/store/index.js';
 	import {
 		byte
 	} from "@/util/util.js"
@@ -59,9 +60,6 @@
 				isClick: false,
 				downFileLen: 0, // 记录正在下载的长度
 			}
-		},
-		components: {
-			lazyImage
 		},
 		onLoad() {
 			this.downDoneFile = store.state.$downDoneFile
@@ -133,10 +131,20 @@
 					padding-left: 32rpx;
 					display: flex;
 					justify-content: space-between;
-					flex-direction: column;
 					width: calc(100% - 120px);
 
-					.progress {}
+					.left-side {
+						display: flex;
+						justify-content: space-around;
+						flex-direction: column;
+						width: 85%;
+					}
+
+					.right-side {
+						display: flex;
+						align-items: center;
+					}
+
 				}
 			}
 		}
@@ -165,17 +173,6 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-
-			.empty-btn {
-				color: white;
-				margin: 10px;
-				padding: 16rpx;
-				border-radius: 24px;
-				font-size: 36rpx;
-				font-weight: bold;
-				text-align: center;
-				background-image: linear-gradient(135deg, #f6d365, #fda085);
-			}
 		}
 
 		.done {

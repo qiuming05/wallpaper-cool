@@ -1,50 +1,29 @@
 <template>
 	<view>
-		<view class="head" :style="{marginTop: menuButtonInfo + 'px'}">
-			<text>壁纸酷</text>
-			<view class="bg"></view>
-		</view>
+		<image class="bg" src="/static/bg.gif" mode="scaleToFill"></image>
 		<view class="main">
+			<uni-section title="数据统计" subTitle="点击查看" type="line" />
 			<view class="store">
-				<view class="store-item">
-					<view class="num">{{collectionLen}}</view>
-					<view class="title">收藏数</view>
-				</view>
-				<view class="store-item">
-					<view class="num">{{downDoneFileLen}}</view>
-					<view class="title">下载数</view>
-				</view>
-				<view class="store-item">
+				<view class="store-item" @click="historyClick">
 					<view class="num">{{historyLen}}</view>
 					<view class="title">预览数</view>
 				</view>
+				<view class="store-item" @click="cellClick">
+					<view class="num">{{collectionLen}}</view>
+					<view class="title">收藏数</view>
+				</view>
+				<view class="store-item" @click="downClick">
+					<view class="num">{{downDoneFileLen}}</view>
+					<view class="title">下载数</view>
+				</view>
 			</view>
 			<view class="menu">
-				<view class="menu-item" hover-stay-time="50" @click="cellClick">
+				<view class="menu-item" hover-stay-time="50" @click="githubCopy">
 					<view class="left-side">
-						<image src="/static/icon/coll_art.png"></image>
-						<view class="title">我的收藏</view>
+						<image src="/static/icon/github.png"></image>
+						<view class="title">Github</view>
 					</view>
 					<view class="right-side">
-						<u-icon size="32" name="arrow-right" />
-					</view>
-				</view>
-				<view class="menu-item" hover-stay-time="50" @click="downClick">
-					<view class="left-side">
-						<image src="/static/icon/down.png"></image>
-						<view class="title">我的下载</view>
-					</view>
-					<view class="right-side">
-						<u-icon size="32" name="arrow-right" />
-					</view>
-				</view>
-				<view class="menu-item" hover-stay-time="50" @click="historyClick">
-					<view class="left-side">
-						<image src="/static/icon/view.png"></image>
-						<view class="title">我的预览</view>
-					</view>
-					<view class="right-side">
-						<view class=""></view>
 						<u-icon size="32" name="arrow-right" />
 					</view>
 				</view>
@@ -54,45 +33,35 @@
 						<view class="title">清除缓存</view>
 					</view>
 					<view class="right-side">
-						<view class=""></view>
+						<u-icon size="32" name="arrow-right" />
+					</view>
+				</view>
+				<view class="menu-item" hover-stay-time="50" @click="aboutClick">
+					<view class="left-side">
+						<image src="/static/icon/about.png"></image>
+						<view class="title">关于</view>
+					</view>
+					<view class="right-side">
 						<u-icon size="32" name="arrow-right" />
 					</view>
 				</view>
 			</view>
 		</view>
-		<food-tab :index="2" @switchTab="switchTab"></food-tab>
+		<foot-tab :index="2" @switchTab="switchTab"></foot-tab>
 	</view>
+
 </template>
 
 <script>
-	// 获取系统状态栏的高度
-	let menuButtonInfo = {};
-	// 如果是小程序，获取右上角胶囊的尺寸信息，避免导航栏右侧内容与胶囊重叠(支付宝小程序非本API，尚未兼容)
-	// #ifdef MP-WEIXIN || MP-BAIDU || MP-TOUTIAO || MP-QQ
-	const {
-		top
-	} = uni.getMenuButtonBoundingClientRect()
-	menuButtonInfo = top
-	// #endif
-	// #ifdef APP-PLUS
-	uni.getSystemInfo({
-		success: res => {
-			menuButtonInfo = res.statusBarHeight;
-		}
-	});
-	// #endif
-	import foodTab from '@/components/foodTab/foodTab.vue'
-	import store from '@/store/index.js'; //需要引入store
+	import store from '@/store/index.js';
+	import config from '@/util/config.js'
 	export default {
-		components: {
-			foodTab,
-		},
 		data() {
 			return {
-				menuButtonInfo: menuButtonInfo,
+				config,
 				collectionLen: 0,
 				downDoneFileLen: 0,
-				historyLen: 0
+				historyLen: 0,
 			}
 		},
 		onShow() {
@@ -111,6 +80,15 @@
 					icon: 'none',
 				});
 			},
+			githubCopy() {
+				//uni.setClipboardData 内容复制到粘贴板
+				uni.setClipboardData({
+					data: config.github, //要被复制的内容
+					success: () => { //复制成功的回调函数
+						this.showToast('已复制开源链接')
+					}
+				});
+			},
 			deleteClick() {
 				store.commit("DEL_STORAGE_KNOW")
 				store.commit("DEL_STORAGE_SCREEN")
@@ -122,6 +100,11 @@
 				this.collectionLen = store.state.$collection.length
 				this.downDoneFileLen = store.state.$downDoneFile.length
 				this.historyLen = store.state.$history.length
+			},
+			aboutClick() {
+				uni.navigateTo({
+					url: "/pages/about/index"
+				})
 			},
 			downClick() {
 				uni.navigateTo({
@@ -143,52 +126,20 @@
 </script>
 
 <style lang="scss">
-	.head {
-		margin: 32rpx 32rpx 32rpx 24rpx;
-		height: 250rpx;
-		border-radius: 36rpx;
-		overflow: hidden;
-		/* 设置渐变 */
-		background: linear-gradient(to right bottom,
-				rgba(255, 255, 255, .6),
-				rgba(255, 255, 255, .3),
-				rgba(255, 255, 255, .2));
-		/* 设置上高光和左高光，使其看起来更加逼真 */
-		border-top: 1px solid rgba(255, 255, 255, .8);
-		border-left: 1px solid rgba(255, 255, 255, .8);
-		position: relative;
-		box-shadow: 0px 0px 10px #c2e9fb;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
-		text {
-			font-size: 72rpx;
-			color: white;
-			font-weight: 900;
-		}
-
-		.bg {
-			width: 100%;
-			height: 100%;
-			z-index: -1;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
-			position: absolute;
-			background-image: linear-gradient(135deg, #a1c4fd, #c2e9fb);
-			filter: blur(10px);
-		}
+	.bg {
+		width: 100vw;
+		-webkit-mask: linear-gradient(0deg, transparent, #fff 65%);
 	}
 
 	.main {
-		padding: 32rpx;
+		padding: 0 32rpx;
 
 		.store {
 			display: flex;
 			flex-direction: row;
 			justify-content: space-between;
+			background: #f7fbff;
+			border-radius: 24rpx;
 
 			.store-item:first-child {
 				margin-left: 0;
@@ -208,7 +159,6 @@
 				justify-content: center;
 				color: black;
 				border-radius: 24rpx;
-				background: white;
 				white-space: nowrap;
 
 				.num {
@@ -226,6 +176,7 @@
 			margin-top: 36rpx;
 			background: white;
 			border-radius: 24rpx;
+			background: #f7fbff;
 
 			.menu-item:last-child {
 				border-bottom: none;

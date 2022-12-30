@@ -13,7 +13,7 @@ export default {
 				})
 			} else if (this.TabBarcurrent == 1) {
 				uni.switchTab({
-					url: '/pages/type/index'
+					url: '/pages/toplist/index'
 				})
 			} else if (this.TabBarcurrent == 2) {
 				uni.switchTab({

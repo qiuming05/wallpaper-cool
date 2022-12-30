@@ -1,6 +1,6 @@
 <template>
 	<view class="main">
-		<uni-section title="purity" subTitle="观看场景" type="line">
+		<uni-section title="场景" subTitle="purity" type="line">
 			<view class="checkbox">
 				<uni-data-checkbox mode="tag" multiple v-model="purity.value" :localdata="purity.range"
 					@change="checkboxChange">
@@ -25,16 +25,16 @@
 			</uni-data-select>
 		</uni-section>
 		</u-picker>
-		<u-divider text="配置完下拉刷新即可生效" textSize="24"></u-divider>
+		<u-divider text="下拉刷新生效" textSize="24"></u-divider>
 	</view>
 </template>
 
 <script>
-	import store from '@/store/index.js'; //需要引入store
+	import store from '@/store/index.js';
 	export default {
 		data() {
 			return {
-				screen: {},
+				filter: {},
 				purity: {
 					value: [1],
 					range: [{
@@ -95,37 +95,36 @@
 				}
 			}
 		},
-		onLoad() {},
 		onShow() {
-			this.screen = store.state.$screen
-			// 初始化还原上次配置
-			if (this.screen.purity.length === 2) {
+			this.filter = store.state.$filter
+			// 还原上次配置
+			if (this.filter.purity.length === 2) {
 				this.purity.value = [0, 1]
 			} else {
 				this.purity.range.find((val, index) => {
-					if (val.text === this.screen.purity[0]) {
+					if (val.text === this.filter.purity[0]) {
 						this.purity.value = [this.purity.range[index].value]
 						return true
 					}
 				})
 			}
 			this.sort.columns.find((val, index) => {
-				if (val.value === this.screen.sort) {
+				if (val.value === this.filter.sort) {
 					this.sort.value = this.sort.columns[index].value
 					return true
 				}
 			})
 			this.atleast.columns.find((val, index) => {
-				if (val.value === this.screen.atleast) {
+				if (val.value === this.filter.atleast) {
 					this.atleast.value = this.atleast.columns[index].value
 					return true
 				}
 			})
 		},
 		watch: {
-			screen: {
+			filter: {
 				handler: function(val) {
-					store.commit("SET_OBJ_SCREEN", val)
+					store.commit("SET_FILTER_OBJ", val)
 				},
 				deep: true
 			}
@@ -138,19 +137,19 @@
 
 				if (data.length === 0) {
 					this.purity.value[0] = 0
-					this.screen.purity = ["SFW"]
+					this.filter.purity = ["SFW"]
 				} else {
-					this.screen.purity = []
+					this.filter.purity = []
 					for (let val of data) {
-						this.screen.purity.push(val.text)
+						this.filter.purity.push(val.text)
 					}
 				}
 			},
 			AtleastChange(v) {
-				this.screen.atleast = v
+				this.filter.atleast = v
 			},
 			SortChange(v) {
-				this.screen.sort = v
+				this.filter.sort = v
 			}
 		}
 	}

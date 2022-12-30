@@ -6,12 +6,11 @@
 			</u-search>
 		</view>
 		<view class="searchHistory">
-			<view class="header">
-				<view class="title">
-					搜索历史
-				</view>
-				<u-icon name='/static/icon/delete.png' :size="38" @click="delAllSearchHistory"></u-icon>
-			</view>
+			<uni-section title="搜索历史" type="line">
+				<template v-slot:right>
+					<u-icon name='/static/icon/delete.png' :size="38" @click="delAllSearchHistory"></u-icon>
+				</template>
+			</uni-section>
 			<view class="content">
 				<view class="tabs">
 					<view class="tab-item" v-for="(key) of searchHistory" @click="() => handleKeyword(key)">
@@ -21,9 +20,7 @@
 			</view>
 		</view>
 		<view class="searchGuess">
-			<view class="title">
-				猜你想搜
-			</view>
+			<uni-section title="猜你想搜" type="line"></uni-section>
 			<view class="content">
 				<view class="tabs">
 					<view class="tab-item" v-for="(key) of recommend" @click="() => handleKeyword(key)">
@@ -36,14 +33,14 @@
 </template>
 
 <script>
-	import store from '@/store/index.js'; //需要引入store
+	import store from '@/store/index.js';
 	import {
 		objToUrl
 	} from "@/util/util.js"
 	export default {
 		data() {
 			return {
-				keyword:"",
+				keyword: "",
 				searchHistory: store.state.$searchHistory,
 				recommend: []
 			}
@@ -51,7 +48,6 @@
 		onLoad() {},
 		methods: {
 			handleSearch(val) {
-				console.log(val);
 				if (this.searchHistory.some(ele => ele === val)) {
 					this.searchHistory.find((value, index, arr) => {
 						if (value === val) {
@@ -66,7 +62,7 @@
 					store.commit("SET_SEARCH_HISTORY", this.searchHistory)
 				}
 				uni.navigateTo({
-					url: '/pages/searchPage/index?title=' + val + '&q=' + val,
+					url: '/pages/preview/index?title=' + val + '&q=' + val,
 				})
 			},
 			delAllSearchHistory() {

@@ -9,7 +9,7 @@
 				redirect(index)
 			}">
 				<!-- 	<image class="list-item-bg" mode="aspectFill" :src="item.thumbs.original" lazy-load /> -->
-				<lazyImage :src="item.thumbs.original"></lazyImage>
+				<lazy-image :src="item.thumbs.original"></lazy-image>
 			</view>
 		</view>
 		<slot name="bottom">
@@ -22,12 +22,8 @@
 
 <script>
 	import store from '@/store/index.js'; //需要引入store
-	import lazyImage from "@/components/lazy-image/index.vue"
 	export default {
 		name: 'img-list',
-		components: {
-			lazyImage
-		},
 		props: {
 			data: {
 				type: Array,

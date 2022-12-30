@@ -1,47 +1,36 @@
-/**
- * 获取时间
- */
+// 获取时间
 export const getTime = () => {
-	let date = new Date();
+	const date = new Date();
 	return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`
 }
 
-
-/**
- * 存储单位换算
- * @param {*} bytes  
- */
+// 字节转换
 export const byte = (bytes) => {
 	if (bytes === 0) return '0 B';
 	var k = 1000, // or 1024
 		sizes = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
 		i = Math.floor(Math.log(bytes) / Math.log(k));
-
 	return (bytes / Math.pow(k, i)).toPrecision(3) + ' ' + sizes[i];
 }
 
-
-/**
- * obj 转 url
- * @param {*} obj
- */
+// 将对象转换为参数
 export const objToUrl = (obj = {}) => {
-	let str = "";
+	let val = "";
 	for (const key in obj) {
 		if (key === "purity") {
 			if (obj[key].length == 2) {
 				// SFW Sketchy
-				str += `&${key}=111`;
+				val += `&${key}=111`;
 			} else if (obj[key][0] === 'SFW') {
 				// SFW
-				str += `&${key}=100`;
+				val += `&${key}=100`;
 			} else {
 				// Sketchy
-				str += `&${key}=010`;
+				val += `&${key}=010`;
 			}
 		} else if (obj[key] !== "") {
-			str += `&${key}=${obj[key]}`;
+			val += `&${key}=${obj[key]}`;
 		}
 	}
-	return str
+	return val
 }

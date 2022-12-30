@@ -1,28 +1,33 @@
 import Vue from 'vue'
 import App from './App'
-// vuex
 import store from './store'
-
-import request from "./request/index"
-
-import Down from "./util/down" // 下载模块
-
-// 引入全局uView
-import uView from '@/uni_modules/uview-ui'
-
-// 引入图片懒加载
-
-// import lazy from "@/util/lazy.js"
-// Vue.use(lazy)
 import mixin from './common/mixin'
+import request from "./request/index"
+import DownFileList from "./util/down" // 下载模块
+import uView from '@/uni_modules/uview-ui' // 引入全局uView
+// 引入组件
+import circleProgressBar from "@/components/circle-progress-bar/circle-progress-bar.vue"
+import footTab from '@/components/foot-tab/foot-tab.vue'
+import headBar from "@/components/headbar/headbar.vue"
+import imgList from "@/components/img-list/img-list.vue"
+import lazyImage from "@/components/lazy-image/lazy-image.vue"
+import sidebar from "@/components/sidebar/sidebar.vue"
+import swiperPostion from "@/components/swiper-position/swiper-position.vue"
+
+Vue.component('circle-progress-bar', circleProgressBar);
+Vue.component('foot-tab', footTab);
+Vue.component('headbar', headBar);
+Vue.component('img-list', imgList);
+Vue.component('lazy-image', lazyImage);
+Vue.component('sidebar', sidebar);
+Vue.component('swiper-postion', swiperPostion);
 
 Vue.prototype.$store = store
-
 Vue.prototype.$request = request
-
-Vue.prototype.$down = Down
-
+Vue.prototype.$down = new DownFileList
 Vue.config.productionTip = false
+
+
 
 App.mpType = 'app'
 Vue.use(uView)

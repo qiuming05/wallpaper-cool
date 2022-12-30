@@ -4,14 +4,20 @@ import {
 	byte
 } from "@/util/util.js"
 
-class Down {
-	//缓存下载项
-	cacheDownItem = {}
-	// 节流记录事件
-	last = 0
-	downloadTask(item) {
-		const downloadTask = uni.downloadFile({
-			url: item.path,
+class DownFile {
+	constructor(imgInfo) {
+		this.imgInfo = imgInfo
+		this.events = {
+			update: [],
+			finish: [],
+		};
+		this.last = 0
+		this.downloadFile = null
+		this.down(imgInfo)
+	}
+	down(imgInfo) {
+		this.downloadFile = uni.downloadFile({
+			url: imgInfo.path,
 			success: (res) => {
 				if (res.statusCode === 200) {
 					let benUrl = res.tempFilePath
@@ -21,9 +27,9 @@ class Down {
 						//授权成功-start，保存图片
 						success: function(res) {
 							uni.showToast({
+								title: '保存成功',
+								duration: 1500,
 								icon: 'none',
-								title: '保存成功', //保存路径
-								duration: 1000,
 							});
 						},
 						//授权成功-end
@@ -68,7 +74,6 @@ class Down {
 									}
 								});
 							}
-
 						},
 						//授权失败-end
 					})
@@ -80,61 +85,79 @@ class Down {
 			}
 		});
 		let isUpDate = false // 解决app会重复执行三次的bug
-		downloadTask.onProgressUpdate((res) => {
-			// console.log('下载进度' + res.progress);
-			// console.log('已经下载的数据长度' + res.totalBytesWritten);
-			// console.log('预期需要下载的数据总长度' + res.totalBytesExpectedToWrite);
-			const offset = res.totalBytesWritten // 下载偏移量
-			this._updateCache(item.id, {
-				...item,
-				offset,
-				progress: res.progress,
-			})
+		this.downloadFile.onProgressUpdate((res) => {
+			const imgInfoObj = {
+				...imgInfo,
+				offset: res.totalBytesWritten, // 下载偏移量
+				progress: res.progress, // 百分比
+			}
+			this._update(imgInfo.id, imgInfoObj)
 			if (res.progress === 100) {
 				if (!isUpDate) {
 					const downTime = getTime()
-					const size = byte(item.file_size)
-					this.showToast(Date.now())
+					const size = byte(imgInfo.file_size)
 					store.commit("SET_DOWN_DONE_FILE", {
-						...item,
-						downTime,
-						size
+						...imgInfo,
+						size,
+						downTime
 					})
-					this._deleteCache(item)
+					this._finish(imgInfo)
+					this._emit('update', imgInfoObj)
+					//结束事件监听
+					this.events = null
 					isUpDate = true
 				}
 			}
 		});
-		return downloadTask
 	}
-	_updateCache(id, obj) { // 更新函数
-		const update = () => {
-			this.cacheDownItem[id] = obj
-			uni.$emit("down-file", obj)
-		}
-		// 开启节流模式
-		this._throttle(update).call(this)
-	}
-	_deleteCache(item) { // 删除函数
-		uni.$emit("del-down-file", item.id)
-		delete this.cacheDownItem[item.path]
-	}
-	_throttle(fun, time = 1000) {
-		// this.last为上一次触发回调的时间
-		return function() {
-			let now = new Date() //当前时间
-			if (now - this.last >= time) {
-				fun.apply(this, arguments)
-				this.last = now
-			}
+	// 实现订阅
+	on(type, callBack) {
+		// 只监听update和finish事件
+		if (Array.isArray(this.events[type])) {
+			this.events[type] = [callBack];
+		} else {
+			this.events[type].push(callBack);
 		}
 	}
-	showToast(message) {
+	// 触发事件
+	_emit(type, ...rest) {
+		this.events[type] &&
+			this.events[type].forEach((fn) => fn.apply(this, rest));
+	}
+	_update(id, obj, time = 500) {
+		const now = Date.now() //当前时间
+		if (now - this.last >= time) {
+			this.last = now
+			this._emit('update', obj)
+		}
+	}
+	_finish(item) {
+		this._emit('finish', item)
+	}
+	_showToast(message) {
 		uni.showToast({
 			title: message,
 			duration: 1500,
 			icon: 'none',
 		});
 	}
+
 }
-module.exports = new Down
+
+export default class DownFileList {
+	constructor() {
+		this.cacheDownItem = {} // 缓存下载实例
+	}
+	down(imgInfo) {
+		this.cacheDownItem[imgInfo.id] = new DownFile(imgInfo)
+		this.cacheDownItem[imgInfo.id].on('update', (data) => {
+			console.log(data);
+			uni.$emit("down-file", data)
+			this.cacheDownItem[data.id] = data
+		})
+		this.cacheDownItem[imgInfo.id].on('finish', (data) => {
+			uni.$emit("del-down-file", data.id)
+			delete this.cacheDownItem[data.id]
+		})
+	}
+}

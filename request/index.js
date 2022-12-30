@@ -1,6 +1,5 @@
+import config from '@/util/config.js'
 const timeout = 10 * 1000; //超时时间
-
-const baseUrl = "https://wallhaven.cc/api/v1/search"
 
 /**
  * 显示提示
@@ -22,25 +21,25 @@ export default function request(option) {
 		header, // 请求头
 		dataType, // 响应数据类型
 		timeout = timeout, // 超时时间
-		Loading = false // 是否有加载提示
+		loading = false, // 是否有加载提示
+		loadingText = ""
 	} = option || {};
 	return new Promise((resolve, reject) => {
 		try {
-			if (!!Loading) {
+			if (!!loading) {
 				uni.showLoading({
-					title: 'loading...'
+					title: loadingText
 				});
 			}
 
 			uni.request({
-				url: url || baseUrl,
+				url: url || config.apiBaseUrl,
 				method: method || "GET",
 				data: data,
 				header: header,
 				dataType: dataType || "json",
 				timeout: timeout,
 				success: (res) => {
-					showToast(res)
 					if (res.data) {
 						resolve(res.data);
 					} else {
@@ -51,7 +50,7 @@ export default function request(option) {
 					console.error("接口请求错误");
 				},
 				complete: () => {
-					if (Loading !== false) {
+					if (loading !== false) {
 						uni.hideLoading();
 					}
 				}

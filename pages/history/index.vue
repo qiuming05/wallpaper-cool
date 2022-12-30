@@ -2,12 +2,11 @@
 	<view class="main">
 		<view v-if="data.length === 0" class="empty">
 			<view>
-				<u-icon name="/static/nodata.png" size="300rpx" />
-				<view class="empty-btn">空空如也</view>
+				<u-icon name="/static/empty.gif" size="520rpx" />
 			</view>
 		</view>
 		<view v-else>
-			<imgList :data="data" height='100vh' @click="handleClick" @scrolltolower="scrolltolower">
+			<img-list :data="data" height='100vh' @click="handleClick" @scrolltolower="scrolltolower">
 				<template v-slot:top>
 					<uni-section title="我的预览" :subTitle="`总数: ${dataLen}`" type="line">
 						<template v-slot:right>
@@ -15,14 +14,13 @@
 						</template>
 					</uni-section>
 				</template>
-			</imgList>
+			</img-list>
 		</view>
 	</view>
 </template>
 
 <script>
 	import store from '@/store/index.js'; //需要引入store 
-	import imgList from "@/components/img-list/index.vue"
 	export default {
 		data() {
 			return {
@@ -32,9 +30,6 @@
 				isClick: false, // 是否点击过，在第一次点击时保存数据
 
 			}
-		},
-		components: {
-			imgList,
 		},
 		onLoad() {
 			this.dataLen = store.state.$history.length
@@ -73,16 +68,6 @@
 			justify-content: center;
 			align-items: center;
 
-			.empty-btn {
-				color: white;
-				margin: 10px;
-				padding: 16rpx;
-				border-radius: 24px;
-				font-size: 36rpx;
-				font-weight: bold;
-				text-align: center;
-				background-image: linear-gradient(135deg, #f6d365, #fda085);
-			}
 		}
 
 		.title {

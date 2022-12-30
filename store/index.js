@@ -3,11 +3,11 @@ import Vuex, {
 	createLogger
 } from 'vuex'
 
-Vue.use(Vuex) // vue的插件机制
-const debug = process.env.NODE_ENV === 'development' // 开发环境
+Vue.use(Vuex)
+const debug = process.env.NODE_ENV === 'development'
 
 // 过滤默认配置
-const screenConfig = {
+const filterConfig = {
 	purity: ["SFW"],
 	sort: "date_added",
 	atleast: "",
@@ -25,7 +25,7 @@ function setStorage(key, data = "", success = () => {}, fail = () => {}) {
 	}
 }
 
-function getData(key, def, cb) {
+function getStorage(key, def, cb) {
 	const val = uni.getStorageSync(key)
 	if (cb !== undefined && typeof cb === "function") {
 		cb(val)
@@ -38,33 +38,36 @@ function getData(key, def, cb) {
 
 const store = new Vuex.Store({
 	state: {
-		$index: 0, // 用于图片定位
-		$imgList: [], // 图片数据列表 , detail页面
-		$know: getData("know", true), // 是否显示弹窗
-		$screen: getData("screen", screenConfig, (res) => {
-			if (res === "") setStorage("screen", screenConfig)
-		}), // 图片过滤配置
-		$searchHistory: getData("searchHistory", []), // 搜索历史
-		$downDoneFile: getData("downDoneFile", []), // 存放完成下载列表
-		$collection: getData("collection", []), // 存放收藏列表
-		$history: getData("history", []), // 存放历史记录
+		$index: 0, // detail页图片定位， 
+		$imgList: [], // detail页图片数据
+		$know: getStorage("know", true), // 是否显示弹窗
+		$filter: getStorage("filter", filterConfig, (res) => {
+			if (res === "") setStorage("filter", filterConfig)
+		}), // 配置
+		$searchHistory: getStorage("searchHistory", []), // 搜索历史
+		$downDoneFile: getStorage("downDoneFile", []), // 存放完成下载列表
+		$collection: getStorage("collection", []), // 存放收藏列表
+		$history: getStorage("history", []), // 存放历史记录
 	},
 	mutations: {
-		SET_SCREEN(state, {
+		SET_THEME(state, themeName = "light") {
+			state.themeName = themeName
+		},
+		SET_FILTER(state, {
 			key,
 			val
 		}) {
-			state.$screen[key] = val
-			setStorage('screen', state.$screen)
+			state.$filter[key] = val
+			setStorage('filter', state.$filter)
 		},
-		SET_OBJ_SCREEN(state, obj) {
-			state.$screen = obj
-			setStorage('screen', state.$screen)
+		SET_FILTER_OBJ(state, obj) {
+			state.$filter = obj
+			setStorage('filter', state.$filter)
 		},
-		DEL_STORAGE_SCREEN(state) {
-			state.$screen = screenConfig
-			uni.removeStorageSync("screen")
-			setStorage('screen', screenConfig)
+		DEL_STORAGE_FILTER(state) {
+			state.$filter = filterConfig
+			uni.removeStorageSync("filter")
+			setStorage('filter', filterConfig)
 		},
 		SET_KNOW(state, bool) {
 			state.$know = bool
@@ -149,14 +152,10 @@ const store = new Vuex.Store({
 		},
 	},
 	getters: {
-		screen: (state) => state.$screen,
+		filter: (state) => state.$filter,
 		history: state => state.$history,
 	},
 	plugins: debug ? [createLogger()] : []
 })
-/* 
- state：VueX的数据中心，相当于vue中的data。
- getter：返回对state数据的装饰，相当于vue中的computed。<例：返回格式化后的时间、返回多个state数据的计算结果>
- */
 
 export default store

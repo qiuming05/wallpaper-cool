@@ -33,7 +33,7 @@
 			},
 			handletoScreen() {
 				uni.navigateTo({
-					url: "/pages/screen/index"
+					url: "/pages/config/index"
 				})
 			},
 			handleBackTop() {

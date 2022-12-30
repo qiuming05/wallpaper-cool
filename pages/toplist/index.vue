@@ -9,25 +9,17 @@
 			<view class="main">
 				<view class="preview">
 					<view class="tabs">
-						<scroll-view scroll-x :scroll-with-animation="true">
-							<view v-for="(item,index) of tabs[1]" :key="item.name" class="tab-item"
-								:class="categoriesVal == item.value ?'tab-active':''"
-								@click="() => swiperChange(1,item.value,index)">
-								<text>{{item.text}}</text>
-							</view>
-							<view v-for="(item,index) of tabs[2]" :key="item.C" class="tab-item"
-								:class="categoriesVal == item.value ?'tab-active':''"
-								@click="() => swiperChange(2,item.value,index)">
-								<text>{{item.text}}</text>
+						<scroll-view scroll-x="true">
+							<view class="tab-item" :class="index == item.id ?'tab-active':''" v-for="item of tabs"
+								:key="item.id" hover-stay-time="50" @click="() => swiperChange(item)">
+								<view>{{item.text}}</view>
 							</view>
 						</scroll-view>
 					</view>
-					<uni-section :title="`图片总数: ${meta.total}`" type="line">
-					</uni-section>
+					<uni-section :title="`图片总数: ${meta.total}`" type="line" />
 					<view v-if="data.length !== 0" class="previewList">
 						<view class="list-item" v-for="(item,index) of data" :key="index"
 							@click="() => imgClick(index)">
-							<!-- <image class="list-item-bg" mode="aspectFill" :src="item.thumbs.original" /> -->
 							<lazy-image width="100%" height="100%" :src="item.thumbs.original">
 							</lazy-image>
 						</view>
@@ -44,81 +36,59 @@
 			</view>
 		</scroll-view>
 		<sidebar :iconSize="42" :isShowBackTop="isShowBackTop" @backTop="handleBackTop"></sidebar>
-		<foot-tab :index="0" @switchTab="switchTab"></foot-tab>
-		<u-modal :show="show" title="免责声明" confirmText="知道了" width="580rpx" @confirm="confirm">
-			<view class="modal">
-				<view class="modal-content">{{config.tips}}</view>
-				<view class="modal-checkbox">
-					<u-checkbox-group v-model="checked">
-						<u-checkbox name="know" size="16px" labelSize="16px" label="近期不再弹出"></u-checkbox>
-					</u-checkbox-group>
-				</view>
-			</view>
-		</u-modal>
+		<foot-tab :index="1" @switchTab="switchTab"></foot-tab>
 	</view>
 </template>
 
 <script>
-	import store from '@/store/index.js'; //需要引入store
+	import store from '@/store/index.js';
+	import config from '@/util/config.js';
 	import {
-		objToUrl,
-	} from "@/util/util.js"
-	import config from '@/util/config.js'
+		objToUrl
+	} from "@/util/util.js";
 	export default {
 		data() {
 			return {
-				categoriesVal: '111', // 选项ID
+				index: 0,
+				page: 1,
+				tabs: [{
+						text: '最新榜',
+						value: 'date_added',
+						id: 0
+					},
+					{
+						text: '热门榜',
+						value: 'hot',
+						id: 1
+					},
+					{
+						text: '排行榜',
+						value: 'toplist',
+						id: 2
+					},
+					{
+						text: '收藏榜',
+						value: 'favorites',
+						id: 3
+					}, {
+						text: '随机榜',
+						value: 'random',
+						id: 4
+					}
+				],
 				scrollViewH: '100px',
 				topItem: '', // 用于顶部返回
 				data: [], // 图片数据
-				tabs: {
-					1: [{
-						text: "热门",
-						value: "111",
-					}, {
-						text: "动漫",
-						value: "010",
-					}, {
-						text: "人物",
-						value: "001",
-					}],
-					2: [{
-						text: "自然",
-						value: '37'
-					}, {
-						text: "风景",
-						value: '711'
-					}, {
-						text: "4k",
-						value: '65348'
-					}, {
-						text: "简约",
-						value: '198'
-					}, {
-						text: "插画",
-						value: '24563'
-
-					}, {
-						text: "游戏",
-						value: '55'
-					}]
-				}, // 选项卡
-				type: 1, // tabs type
-				currentTab: {}, // 当前标签数据
-				isShowBackTop: false, // 是否显示返回顶部的小火箭
+				isShowBackTop: false, // 返回顶部的标记点
 				isRefresher: false, // 下拉状态是否完成
 				isload: true, // 是否加载中
-				page: 1, // data计数器,第几页的数据
 				meta: {}, // 请求数据的详情
-				show: store.state.$know, // 显示弹窗
-				checked: [], // 近期是否弹出
-				config, // 配置
+				isShowBackTop: false, // 是否显示返回顶部的小火箭
 			}
 		},
 		onLoad() {
 			uni.hideTabBar()
-			this.currentTab = this.tabs[1][0]
-			this.getData(this.currentTab.value).then(res => {
+			this.getData().then(res => {
 				this.meta = res.meta
 				this.data = res.data
 			})
@@ -131,19 +101,41 @@
 			}
 		},
 		methods: {
-			confirm() {
-				this.show = false
-				if (this.checked[0] === "know") {
-					store.commit("SET_STORAGE_KNOW", false)
-				} else {
-					store.commit("SET_KNOW", false)
+			getData() {
+				store.state.$filter.q = ""
+				let obj = {
+					...store.state.$filter,
+					sorting: this.tabs[this.index].value
 				}
+				obj.sort = ""
+				return this.$request({
+					url: config.apiBaseUrl + `search?${objToUrl(obj)}&page=${this.page}`
+				})
+			},
+			swiperChange(item) {
+				if (item.id === this.index) return
+				this.index = item.id
+				this.page = 1
+				this.isload = true
+				this.meta = {}
+				this.data = []
+				this.getData().then(res => {
+					this.meta = res.meta
+					this.data = res.data
+				})
+			},
+			handleBackTop() {
+				this.topItem = 'topPosition'
+			},
+			imgClick(index) {
+				store.commit("SET_IMGLIST", this.data)
+				this.redirect(index)
 			},
 			refresherrefresh() {
 				this.isRefresher = true
 				this.page = 1
 				this.isload = true
-				this.getData(this.currentTab.value)
+				this.getData()
 					.then(res => {
 						this.meta = res.meta
 						this.data = res.data
@@ -159,57 +151,15 @@
 			handleBackTop() {
 				this.topItem = 'topPosition'
 			},
-			swiperChange(type, value, index) {
-				if (value == this.categoriesVal) return
-				this.page = 1
-				this.type = type
-				this.isload = true
-				this.categoriesVal = value
-				this.currentTab = this.tabs[type][index]
-				this.meta = {}
-				this.data = []
-				this.getData(this.currentTab.value)
-					.then(res => {
-						this.meta = res.meta
-						this.data = res.data
-					})
-			},
-			getData(value) { // 获取数据
-				const strategry = {
-					1: (value) => {
-						store.state.$filter.q = ""
-						const obj = {
-							...store.state.$filter,
-							categories: value
-						}
-						return this.$request({
-							url: config.apiBaseUrl + `search?${objToUrl(obj)}&page=${this.page}`
-						})
-					},
-					2: (value) => {
-						store.state.$filter.q = "id:" + value
-						return this.$request({
-							url: config.apiBaseUrl +
-								`search?${objToUrl(store.state.$filter)}&page=${this.page}`
-						})
-					}
-				}
-				return strategry[this.type](value)
-			},
 			scrolltolower() { // 滚动事件
 				if (!this.isload) return
 				// 底部事件
-				this.tabs[this.type].find((item, index) => {
-					if (item.value == this.categoriesVal) {
-						this.page++;
-						this.getData(this.currentTab.value)
-							.then(res => {
-								this.data = [...this.data, ...res.data]
-								if (this.data.length === 0) this.isload = false
-							})
-						return true
-					}
-				})
+				this.page++;
+				this.getData()
+					.then(res => {
+						this.data = [...this.data, ...res.data]
+						if (this.data.length === 0) this.isload = false
+					})
 			},
 			redirect(index) { // 点击后重定向
 				store.commit("SET_INDEX", index)
@@ -217,29 +167,35 @@
 					url: "/pages/detail/index"
 				})
 			},
-			imgClick(index) {
-				store.commit("SET_IMGLIST", this.data)
-				this.redirect(index)
-			}
 		}
 	}
 </script>
 
 <style lang="scss" scoped>
-	.modal {
-		.modal-content {
-			font-size: 16px;
-		}
-
-		.modal-checkbox {
-			float: right;
-			margin-top: 12px;
-		}
-	}
-
 	.main {
 		padding: 15rpx;
-		margin-bottom: 350rpx;
+
+
+		/* 	 .tab:nth-child(1) {
+				background-image: linear-gradient(135deg, #84fab0, #8fd3f4);
+			}
+			
+			.tab:nth-child(2) {
+				background-image: linear-gradient(135deg, #d4fc79, #96e6a1);
+			}
+			
+			.tab:nth-child(3) {
+				background-image: linear-gradient(135deg, #c2e9fb, #a1c4fd);
+			}
+			
+			.tab:nth-child(4) {
+				background-image: linear-gradient(135deg, #e6dee9, #fdcbf1);
+			}
+			
+			.tab:nth-child(5) {
+				margin-right: 0rpx;
+				background-image: linear-gradient(135deg, #f6d365, #fda085);
+			} */
 
 		.preview {
 
