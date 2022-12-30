@@ -1,5 +1,6 @@
 .DS_Store
 api.json
+/android
 /unpackage
 
 # local env files
