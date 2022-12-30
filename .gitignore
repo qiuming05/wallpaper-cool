@@ -1,6 +1,5 @@
 .DS_Store
 api.json
-/uni_modules
 /unpackage
 
 # local env files
